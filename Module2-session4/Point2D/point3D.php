@@ -35,6 +35,6 @@ class Point3D extends Point2D
 
     public function showPosition()
     {
-        echo "(" . parent::getY() . "," . parent::getX() . "," . $this->z . ")";
+        echo "(" . parent::getX() . "," . parent::getY() . "," . $this->z . ")";
     }
 }
