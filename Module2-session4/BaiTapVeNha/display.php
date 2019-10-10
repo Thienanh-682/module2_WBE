@@ -6,10 +6,10 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-
 </head>
+<body>
 <form action="add_student.php" method="get">
-
+    <center>
         <table>
             <tr>
                 <td>Name:</td>
@@ -38,8 +38,24 @@
                 <td colspan="2" style="text-align: center"><input type="submit" value="Add"></td>
             </tr>
         </table>
-
+    </center>
 </form>
-
+<table>
+    <?php
+    include_once "StudentsManager.php";
+    $listStudent = $manager->readFileJsonToArray();
+    for ($i = 0; $i < count($listStudent); $i++) {
+        echo "<tr>";
+        echo "<td width='20%'>" . $listStudent[$i]['names'] . "</td>";
+        echo "<td width='20%'>" . $listStudent[$i]['address'] . "</td>";
+        echo "<td width='20%'>" . $listStudent[$i]['phone'] . "</td>";
+        echo "<td width='20%'>" . $listStudent[$i]['class'] . "</td>";
+        echo "<td width='20%'>" . $listStudent[$i]['role'] . "</td>";
+        echo "<td>" . "<a href='delete.php?id=". $i . "'>" . "Delete</a>" . "</td>";
+        echo "<td>" . "<a href='edit.php?id=" . $i . "'>" . "Edit</a>" . "</td>";
+        echo "</tr>";
+    }
+    ?>
+</table>
 </body>
 </html>
