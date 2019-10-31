@@ -2,23 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StudentRequest;
+use App\Http\Services\StudentServiceInterface;
 use App\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class StudentController extends Controller
 {
-    public $students;
+    public $studentService;
 
-    public function __construct(Student $student)
+    public function __construct(StudentServiceInterface $studentService)
     {
-        $this->students = $student;
+        $this->studentService = $studentService;
         $this->middleware('auth');
     }
 
     public function index()
     {
-        $students = $this->students->paginate(2);
+        $students = $this->studentService->getAll();
         return view('index', compact('students'));
     }
 
@@ -27,46 +30,29 @@ class StudentController extends Controller
         return view('create');
     }
 
-    public function store(Request $request)
+
+    public function store(StudentRequest $request)
     {
-        $this->students->name = $request->name;
-        $this->students->phone = $request->phone;
-        $this->students->address = $request->address;
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $path = $image->store('images', 'public');
-            $this->students->image = $path;
-        }
-        $this->students->save();
+        $this->studentService->create($request);
         return redirect()->route('student.index');
     }
 
     public function delete($id)
     {
-        $student = $this->students->findOrFail($id);
-        $student->delete();
-
+        $this->studentService->delete($id);
         return redirect()->route('student.index');
     }
 
     public function edit($id)
     {
-        $student = $this->students->findOrFail($id);
+        $student = $this->studentService->findById($id);
         return view('edit', compact('student'));
     }
 
-    public function update(Request $request, $id)
+    public function update(StudentRequest $request, $id)
     {
-        $student = $this->students->findOrFail($id);
-        $student->name = $request->name;
-        $student->phone = $request->phone;
-        $student->address = $request->address;
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $path = $image->store('images', 'public');
-            $student->image = $path;
-        }
-        $student->save();
+
+        $this->studentService->edit($request, $id);
         return redirect()->route('student.index');
     }
 

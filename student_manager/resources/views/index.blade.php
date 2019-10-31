@@ -4,10 +4,10 @@
     <h1 class="text-center">Quản lí học sinh</h1>
     <form method="get" action="{{route('student.search')}}">
         @csrf
-        <input type="text" placeholder="Name/Phone/Address" name="search">
-        <input type="submit" class="btn btn-success" value="Search"><hr>
-    </form>
-    <a href= "{{route('student.create')}}" class="btn btn-success">Create</a>
+        <input type="text" placeholder="Name/Phone/Address"  name="search">
+        <input type="submit" class="btn btn-success"  value="Search"><hr>
+        </form>
+    <a href="{{route('student.create')}}" class="btn btn-success">Create</a>
     <table class="table">
         <thead class="btn-dark">
         <tr>
@@ -21,12 +21,14 @@
         </thead>
         @foreach($students as $key => $student )
             <tbody>
+
             <tr>
+
                 <th scope="row">{{++$key}}</th>
                 <td>{{$student->name}}</td>
                 <td>{{$student->phone}}</td>
                 <td>{{$student->address}}</td>
-                <td><img src="{{asset('storage/'. $student->image)}}" style="width: 50px;height: 60px"></td>
+                <td><img src="{{asset( 'storage/'. $student->image)}}" style="width: 50px;height: 60px"></td>
                 <td>
                     <a href="{{route('student.delete',$student->id)}}" class="btn btn-success">Delete</a>
                     <a href="{{route('student.edit',$student->id)}}" class="btn btn-success">Edit</a>

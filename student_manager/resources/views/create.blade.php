@@ -4,19 +4,47 @@
     <h1>Thêm mới học sinh</h1>
     <div class="container">
         <div class="row">
-            <form  method="post" enctype="multipart/form-data">
+            <form method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
+                    <input type="text" class="form-control
+                    @if ($errors->has('name'))
+                        border-danger
+                        @endif
+                        " id="name" name="name">
+                    @if ($errors->has('name'))
+                        <p class="text-danger"><img
+                                src="https://img.icons8.com/color/20/000000/high-importance--v1.png"> {{$errors->first('name')}}
+                        </p>
+                    @endif
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="text" class="form-control" id="phone" name="phone" required>
+                    <input type="text" class="form-control
+                                 @if ($errors->has('phone'))
+                                    border-danger
+                                @endif
+                        " id="phone" name="phone">
+                    @if ($errors->has('phone'))
+                        <p class="text-danger"><img
+                                src="https://img.icons8.com/color/20/000000/high-importance--v1.png"> {{$errors->first('phone')}}
+                        </p>
+                    @endif
                 </div>
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <input type="text" class="form-control" id="address" name="address" required>
+                    <input type="text" class="form-control
+                              @if ($errors->has('address'))
+                        border-danger
+                            @endif
+                        " id="address" name="address">
+                    @if ($errors->has('address'))
+                        <p class="text-danger"><img
+                                src="https://img.icons8.com/color/20/000000/high-importance--v1.png"> {{$errors->first('address')}}
+                        </p>
+
+                    @endif
                 </div>
                 <div class="form-group">
                     <label for="image">Image</label>
