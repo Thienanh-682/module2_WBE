@@ -1,14 +1,22 @@
 @extends('home')
 
 @section('index')
-    <h1 class="text-center">Quản lí học sinh</h1>
+    <h1 class="text-center">Student Management System</h1>
     <form method="get" action="{{route('student.search')}}">
         @csrf
-        <input type="text" placeholder="Name/Phone/Address"  name="search">
+
+        <input type="text" placeholder="Name/Phone/Address" class="
+                    @if($errors->has('search'))
+                            border-danger
+                        @endif" name="search">
         <input type="submit" class="btn btn-success"  value="Search"><hr>
+        @if ($errors->has('search'))
+           <p class="text-danger"><img
+                   src="https://img.icons8.com/color/20/000000/high-importance--v1.png"> {{$errors->first('search')}}</p>
+        @endif
         </form>
     <a href="{{route('student.create')}}" class="btn btn-success">Create</a>
-    <table class="table">
+    <table class="table table-bordered" style="background: #f8f9fa">
         <thead class="btn-dark">
         <tr>
             <th scope="col">STT</th>

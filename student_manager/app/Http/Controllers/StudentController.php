@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchRequest;
 use App\Http\Requests\StudentRequest;
 use App\Http\Services\StudentServiceInterface;
 use App\Student;
@@ -56,7 +57,7 @@ class StudentController extends Controller
         return redirect()->route('student.index');
     }
 
-    public function search(Request $request)
+    public function search(SearchRequest $request)
     {
         $search = $request->get('search');
         $dataSearch = DB::table("staffs")->where("name", "like", "%$search%")

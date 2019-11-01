@@ -1,7 +1,7 @@
 @extends('home')
 
 @section('index')
-    <h1>Chỉnh sửa thông tin học sinh</h1>
+    <h1>Edit Student Information</h1>
     <div class="container">
         <div class="row">
             <form  method="post" enctype="multipart/form-data">

@@ -33,10 +33,10 @@ class StudentRequest extends FormRequest
     public function messages()
     {
         return [
-          'name.required' => 'Không thể để trống trường này',
-          'name.min' => 'Phải có ít nhất  3 ký tự ',
-            'phone.required' => 'Không thể để trống trường này',
-          'address.required' => 'Không thể để trống trường này',
+          'name.required' => 'This field cannot be empty',
+          'name.min' => 'Must be at least 3 characters',
+            'phone.required' => 'This field cannot be empty',
+          'address.required' => 'This field cannot be empty',
         ];
     }
 }
