@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Blog;
 use App\Http\Services\BlogServicesInterface;
 use Illuminate\Http\Request;
 
@@ -32,8 +33,11 @@ class BlogController extends Controller
     }
     public function delete($id)
     {
-        $this->blogService->delete($id);
-        return redirect()->route('blog.index');
+        $blog = Blog::findOrFail($id);
+        $blog->delete();
+        return response()->json([
+            'message' => 'xoa thanh cong!'
+        ]);
     }
     public function edit($id)
     {
@@ -45,9 +49,10 @@ class BlogController extends Controller
         $this->blogService->edit($request,$id);
         return redirect()->route('blog.index');
     }
-    public function search(Request $request)
-    {
-        $blogs = $this->blogService->search($request);
-        return view('search',compact('blogs'));
+    public function search(Request $request) {
+        if ($request->ajax()) {
+            $blogs = Blog::where('name', 'LIKE', '%'. $request->keyword . '%')->get();
+            return response()->json($blogs);
+        }
     }
 }

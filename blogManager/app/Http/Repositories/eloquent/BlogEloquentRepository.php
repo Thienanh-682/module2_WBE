@@ -18,7 +18,7 @@ class BlogEloquentRepository implements BlogRepositoryInterface
 
     function index()
     {
-        return $this->blog->paginate(2);
+        return $this->blog->get();
     }
 
     function findById($id)
@@ -31,18 +31,13 @@ class BlogEloquentRepository implements BlogRepositoryInterface
         return $obj->save();
     }
 
-    function destroy($obj)
-    {
-       return $obj->delete();
-    }
+//    function destroy($obj)
+//    {
+//       return $obj->delete();
+//    }
 
     function update($obj)
     {
         return $obj->save();
-    }
-
-    function search($keyWord)
-    {
-        return $this->blog->where("name","like","%$keyWord%")->paginate(2);
     }
 }

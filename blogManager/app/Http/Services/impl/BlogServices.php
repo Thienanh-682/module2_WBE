@@ -64,10 +64,4 @@ class BlogServices implements BlogServicesInterface
         }
         return $this->blogRepository->update($blog);
     }
-
-    public function search($request)
-    {
-       $keyWord = $request->search;
-       return $this->blogRepository->search($keyWord);
-    }
 }

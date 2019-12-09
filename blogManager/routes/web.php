@@ -24,10 +24,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::prefix('blog')->group(function (){
     Route::get('index','BlogController@index')->name('blog.index');
+    Route::get('search','BlogController@search')->name('blog.search');
+    Route::get('/{id}/delete','BlogController@delete')->name('blog.delete');
     Route::get('create','BlogController@create')->name('blog.create');
     Route::post('create','BlogController@store')->name('blog.store');
-    Route::get('delete/{id}','BlogController@delete')->name('blog.delete');
     Route::get('edit/{id}','BlogController@edit')->name('blog.edit');
     Route::post('edit/{id}','BlogController@update')->name('blog.update');
-    Route::get('search','BlogController@search')->name('blog.search');
+
 });

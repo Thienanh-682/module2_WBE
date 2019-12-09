@@ -18,7 +18,7 @@ class StudentEloquentRepository implements StudentRepositoryInterface
 
     function index()
     {
-        return $this->student->paginate(2);
+        return $this->student->all();
     }
 
     function store($obj)

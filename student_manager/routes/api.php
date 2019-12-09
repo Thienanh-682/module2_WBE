@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,12 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::prefix('student')->group(function (){
+    Route::get('','StudentController@index');
+    Route::post('create','StudentController@store');
+    Route::get('/{id}','StudentController@getById');
+    Route::put('/{id}/edit','StudentController@update');
+    Route::get('/{id}/delete','StudentController@delete');
 });

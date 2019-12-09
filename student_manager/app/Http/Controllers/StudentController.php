@@ -17,13 +17,23 @@ class StudentController extends Controller
     public function __construct(StudentServiceInterface $studentService)
     {
         $this->studentService = $studentService;
-        $this->middleware('auth');
     }
 
     public function index()
     {
-        $students = $this->studentService->getAll();
-        return view('index', compact('students'));
+        try {
+            $students = $this->studentService->getAll();
+
+        } catch (\Exception $e) {
+          return response()->json([
+             'status' => 'error',
+             'message' => $e->getMessage()
+          ]);
+        };
+        return response()->json([
+            'status' => "success",
+            'data' => $students
+        ]);
     }
 
     public function create()
@@ -34,27 +44,64 @@ class StudentController extends Controller
 
     public function store(StudentRequest $request)
     {
-        $this->studentService->create($request);
-        return redirect()->route('student.index');
+        try{
+            $this->studentService->create($request);
+
+        } catch (\Exception $e) {
+            return response()->json([
+               'status' => 'error',
+               'message' => $e->getMessage()
+            ]);
+        }
+        return response()->json([
+           'status' => 'success',
+           'message'  => 'Tạo mới thành công '
+        ]);
+
+    }
+
+    public function getById($id)
+    {
+        $student = $this->studentService->findById($id);
+        return response()->json($student);
     }
 
     public function delete($id)
     {
-        $this->studentService->delete($id);
-        return redirect()->route('student.index');
+        try {
+            $student = $this->studentService->delete($id);
+        }catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
+        return response()->json([
+           'status' => 'success',
+           'message' => 'Đã xóa thành công'
+        ]);
     }
 
     public function edit($id)
     {
         $student = $this->studentService->findById($id);
-        return view('edit', compact('student'));
+        return response()->json($student);
     }
 
     public function update(StudentRequest $request, $id)
     {
-
-        $this->studentService->edit($request, $id);
-        return redirect()->route('student.index');
+        try{
+            $this->studentService->edit($request, $id);
+        }catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'data' => $e->getMessage()
+            ]);
+        }
+        return response()->json([
+           'status' => 'success',
+           'message' => 'Cập nhật thành công'
+        ]);
     }
 
     public function search(SearchRequest $request)
